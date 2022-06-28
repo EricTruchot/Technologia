@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Services\FileServices;
+
 class Articles extends Controller
 {
 protected $modelName = \Models\Articles::class;
@@ -103,6 +105,9 @@ protected $modelName = \Models\Articles::class;
     {
        // function upload a ajouter
 
+       $upload = new FileServices;
+        $file = $upload->upload();
+
         $articleModel = new \Models\Articles();
 
 
@@ -124,6 +129,11 @@ protected $modelName = \Models\Articles::class;
             $description = htmlspecialchars($_POST['description']);
         }
 
+        $idEntreprise = null;
+        if (!empty($_POST['idEntreprise'])) {
+            $idEntreprise = is_int($_POST['idEntreprise']); //ON ES LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        }
+
 
         // Vérification finale des infos envoyées dans le formulaire (donc dans le POST)
         // Si il n'y a pas d'auteur OU qu'il n'y a pas de contenu OU qu'il n'y a pas d'identifiant d'article
@@ -132,7 +142,7 @@ protected $modelName = \Models\Articles::class;
         }
 
         // 3. Insertion du commentaire
-        $this->model->insert($titre, $description);
+        $this->model->insert($titre, $description, $file, $idEntreprise);
 
         // 4. Redirection vers l'article en question :
 

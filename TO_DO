@@ -1,6 +1,6 @@
 upload file
 
-
+delete file
 
 
 visualisation style blog
@@ -15,7 +15,7 @@ CRUD de l'admin sur l'ajout de contenu
 PAGES:
     acceuil (filtre par entreprie???)
     page detail contenu
-    page entreprise???
+
     ADMIN:
         ajout contenu
         liste contenu

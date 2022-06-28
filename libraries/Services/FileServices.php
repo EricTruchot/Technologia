@@ -2,12 +2,13 @@
 
 namespace Services;
 
-class Services
+class FileServices
 {
 
     public function upload()
     {
-        $target_dir = "uploads/";
+        $target_dir = "./uploads/";
+    
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
         //$fileName = $_FILES["fileToUpload"]["name"];
         $uploadOk = 1;
@@ -28,7 +29,6 @@ class Services
 
                 $_SESSION['error'] = 'Fichier non supporter';
                 $uploadOk = 0;
-                \Http::redirect("index.php?controller=user&task=showAdmin");
             }
         }
         // Check if file already exists
@@ -36,25 +36,18 @@ class Services
 
             $_SESSION['error'] = 'Le fichier existe deja';
             $uploadOk = 0;
-            \Http::redirect("index.php?controller=user&task=showAdmin");
         }
         // Check file size
         if ($_FILES["fileToUpload"]["size"] > 50000000) { //50 Mo
 
             $_SESSION['error'] = 'Fichier trop volumineux';
             $uploadOk = 0;
-            \Http::redirect("index.php?controller=user&task=showAdmin");
         }
 
 
         // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-            $_SESSION['error'] = "Le fichier n'a pas pu etre envoyer";
-            $uploadOk = 0;
-            \Http::redirect("index.php?controller=user&task=showAdmin");
-
+        if ($uploadOk == 1) {
             // if everything is ok, try to upload file
-        } else {
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 
                 // echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
@@ -62,7 +55,6 @@ class Services
 
                 $_SESSION['error'] = "Erreur d'envoie";
                 $uploadOk = 0;
-                \Http::redirect("index.php?controller=user&task=showAdmin");
             }
         }
         if ($uploadOk == 1) {

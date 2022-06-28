@@ -6,10 +6,10 @@ class Articles extends Model
 {
  protected $table = "Article";
 
- public function insert(string $titre, string $description): void
+ public function insert(string $titre, string $description, string $file): void
  {
-     $query = $this->pdo->prepare('INSERT INTO Article SET titre = :titre, description = :description, contenu= NULL, date = NOW(), Entreprise_id = 1');
-     $query->execute(compact('titre', 'description'));
+     $query = $this->pdo->prepare('INSERT INTO Article SET titre = :titre, description = :description, contenu = :file, date = NOW(), Entreprise_id = 1');
+     $query->execute(compact('titre', 'description', 'file'));
  }
 
 }
