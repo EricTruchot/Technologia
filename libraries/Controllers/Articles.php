@@ -54,19 +54,13 @@ protected $modelName = \Models\Articles::class;
          */
 
         $article = $this->model->find($article_id);
-        /**
-         * 4. Récupération des commentaires de l'article en question
-         * Pareil, toujours une requête préparée pour sécuriser la donnée filée par l'utilisateur (cet enfoiré en puissance !)
-         */
-
-        $commentaires = $commentModel->findAllWithArticle($article_id);
 
         /**
          * 5. On affiche 
          */
-        $pageTitle = $article['title'];
+        $pageTitle = $article['titre'];
 
-        \Renderer::render('articles/show', compact('pageTitle', 'article', 'commentaires', 'article_id'));
+        \Renderer::render('articles/show', compact('pageTitle', 'article', 'article_id'));
     }
     public function delete()
     {
@@ -95,16 +89,28 @@ protected $modelName = \Models\Articles::class;
          */
         $this->model->delete($id);
 
+
         /**
-         * 5. Redirection vers la page d'accueil
+         * 5. suppression du fichier
+         */
+        if (!empty($_GET['file'])) {
+           
+            $file = htmlspecialchars($_GET['file']);
+            unlink($file);
+        }
+        
+        /**
+         * 6. Redirection vers la page d'accueil
          */
 
         \Http::redirect("index.php?controller=user&task=showAdmin");
     }
     public function insert()
     {
-       // function upload a ajouter
+       // function upload fichier retourne l'emplacement
 
+
+       
        $upload = new FileServices;
         $file = $upload->upload();
 
@@ -130,14 +136,14 @@ protected $modelName = \Models\Articles::class;
         }
 
         $idEntreprise = null;
-        if (!empty($_POST['idEntreprise'])) {
-            $idEntreprise = is_int($_POST['idEntreprise']); //ON ES LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        if (!empty($_POST['entreprise'])) {
+            $idEntreprise = htmlspecialchars($_POST['entreprise']); 
         }
 
 
         // Vérification finale des infos envoyées dans le formulaire (donc dans le POST)
         // Si il n'y a pas d'auteur OU qu'il n'y a pas de contenu OU qu'il n'y a pas d'identifiant d'article
-        if (!$titre || !$description) {
+        if (!$titre || !$description || !$idEntreprise) {
             die("Votre formulaire a été mal rempli !");
         }
 

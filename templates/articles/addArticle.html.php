@@ -8,7 +8,7 @@
     <select name="entreprise">
         <!-- <option value="" selected disabled hidden>Entreprise</option> -->
         <?php foreach ($entreprises as $entreprise) : ?>
-            <option value="<?= $entreprise['idEntreprise']; ?>"><?= $entreprise['nom'] ?></option>
+            <option value="<?= $entreprise['id']; ?>"><?= $entreprise['nom'] ?></option>
         <?php endforeach; ?>
     </select>
     <label>Titre:</label>
@@ -16,7 +16,7 @@
     <label>Description:</label>
     <input type="text" name="description" required>
     <label>Contenu:</label>
-            <input type="file" name="fileToUpload" id="fileToUpload">
+            <input type="file" name="fileToUpload[]" id="fileToUpload" multiple>
             <input class="btn" type="submit" value="Envoyer" name="submit">
 
 </form>
