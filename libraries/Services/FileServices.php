@@ -5,11 +5,11 @@ namespace Services;
 class FileServices
 {
 
-    public function upload()
+    public function upload(array $file)
     {
         $target_dir = "./uploads/";
     
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $target_file = $target_dir . basename($file["name"]);
         //$fileName = $_FILES["fileToUpload"]["name"];
         $uploadOk = 1;
         $fileType = 0; //1 = image, 2 = video
@@ -38,7 +38,7 @@ class FileServices
             $uploadOk = 0;
         }
         // Check file size
-        if ($_FILES["fileToUpload"]["size"] > 50000000) { //50 Mo
+        if ($file["size"] > 50000000) { //50 Mo
 
             $_SESSION['error'] = 'Fichier trop volumineux';
             $uploadOk = 0;
@@ -48,7 +48,7 @@ class FileServices
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 1) {
             // if everything is ok, try to upload file
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            if (move_uploaded_file($file["tmp_name"], $target_file)) {
 
                 // echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
             } else {

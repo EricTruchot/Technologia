@@ -23,7 +23,7 @@ abstract class Model
     {
         $query = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = :id");
         $query->execute(['id' => $id]);
-        $item = $query->fetch();
+        $item = $query->fetch(); //fetchAll? FETCH_ASSOC?
         return $item;
     }
     public function delete(int $id): void

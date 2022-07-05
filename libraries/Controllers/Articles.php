@@ -6,7 +6,7 @@ use Services\FileServices;
 
 class Articles extends Controller
 {
-protected $modelName = \Models\Articles::class;
+    protected $modelName = \Models\Articles::class;
 
     public function index()
     {
@@ -94,11 +94,11 @@ protected $modelName = \Models\Articles::class;
          * 5. suppression du fichier
          */
         if (!empty($_GET['file'])) {
-           
+
             $file = htmlspecialchars($_GET['file']);
             unlink($file);
         }
-        
+
         /**
          * 6. Redirection vers la page d'accueil
          */
@@ -107,15 +107,7 @@ protected $modelName = \Models\Articles::class;
     }
     public function insert()
     {
-       // function upload fichier retourne l'emplacement
-
-
-       
-       $upload = new FileServices;
-        $file = $upload->upload();
-
-        $articleModel = new \Models\Articles();
-
+        $upload = new FileServices;
 
         /**
          * 1. On vérifie que les données ont bien été envoyées en POST
@@ -137,7 +129,7 @@ protected $modelName = \Models\Articles::class;
 
         $idEntreprise = null;
         if (!empty($_POST['entreprise'])) {
-            $idEntreprise = htmlspecialchars($_POST['entreprise']); 
+            $idEntreprise = htmlspecialchars($_POST['entreprise']);
         }
 
 
@@ -147,8 +139,35 @@ protected $modelName = \Models\Articles::class;
             die("Votre formulaire a été mal rempli !");
         }
 
-        // 3. Insertion du commentaire
-        $this->model->insert($titre, $description, $file, $idEntreprise);
+        // 3. Insertion de l'article
+        $lastId = $this->model->insert($titre, $description, $idEntreprise);
+
+
+        // =============== upload file ============
+
+        if (isset($_FILES['fileToUpload'])) {
+            $myFile = $_FILES['fileToUpload'];
+            $fileCount = count($myFile["name"]);
+            $file_ary = array();
+            $file_keys = array_keys($myFile);
+
+            for ($i = 0; $i < $fileCount; $i++) {
+
+                foreach ($file_keys as $key) {
+                    $file_ary[$i][$key] = $myFile[$key][$i];
+                }
+            }
+            foreach ($file_ary as $key => $value) {
+
+                $file = $upload->upload($value);
+
+                $this->model->insertMedia($file, $lastId);
+            }
+        }
+        // ==========================================
+
+
+
 
         // 4. Redirection vers l'article en question :
 
