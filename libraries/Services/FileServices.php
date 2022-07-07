@@ -20,12 +20,15 @@ class FileServices
             if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg" || $imageFileType == "gif") {
 
                 $uploadOk = 1;
-                $fileType = 1; //image
-            } elseif ($imageFileType == "mp4" || $imageFileType == "flv" || $imageFileType == "wmv" || $imageFileType == "mov") {
+             //   $fileType = 1; //image
+            } 
+            // UPLOAD VIDEO 
+            // elseif ($imageFileType == "mp4" || $imageFileType == "flv" || $imageFileType == "wmv" || $imageFileType == "mov") {
 
-                $uploadOk = 1;
-                $fileType = 2; //video
-            } else {
+            //     $uploadOk = 1;
+            //     $fileType = 2; //video
+            // } 
+            else {
 
                 $_SESSION['error'] = 'Fichier non supporter';
                 $uploadOk = 0;

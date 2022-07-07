@@ -2,8 +2,13 @@
 
 
 <!-- ajout entreprise -->
-
+<form action="index.php?controller=entreprise&task=insert" method="POST">
+<label>Ajouter une entreprise:</label>
+    <input type="text" name="nom" required>
+    <input class="btn" type="submit" value="Ajouter" name="submit">
+</form>
 <!-- choix entreprise -->
+
 <form action="index.php?controller=articles&task=insert" method="POST" enctype="multipart/form-data">
     <select name="entreprise">
         <!-- <option value="" selected disabled hidden>Entreprise</option> -->

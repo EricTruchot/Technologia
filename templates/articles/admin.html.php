@@ -7,7 +7,8 @@
     <p><?= $article['description'] ?></p>
     <?php
     if ($_SESSION['type'] == 'admin') { ?>
-    <a href="index.php?controller=articles&task=delete&id=<?= $article['id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
+ <a href="index.php?controller=articles&task=show&id=<?= $article['id'] ?>">En savoir plus</a>
+ <a href="index.php?controller=articles&task=delete&id=<?= $article['id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
 <?php } endforeach ?>
 
 

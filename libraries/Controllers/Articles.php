@@ -16,19 +16,18 @@ class Articles extends Controller
          * 2. Récupération des articles
          */
         // On utilisera ici la méthode query (pas besoin de préparation car aucune variable n'entre en jeu)
-        $articles = $this->model->findAll("date DESC");
-
+        $articles = $this->model->findAllArticleWithEntreprise();
+        $media = $this->model->findAll('Media');
         /**
          * 3. Affichage
          */
         $pageTitle = "Accueil";
-        \Renderer::render('articles/index', compact('pageTitle', 'articles'));
+        \Renderer::render('articles/index', compact('pageTitle', 'articles', 'media'));
     }
     public function show()
     {
         //montrer un article
 
-        $commentModel = new \Models\Comment();
         /**
          * 1. Récupération du param "id" et vérification de celui-ci
          */
@@ -53,14 +52,17 @@ class Articles extends Controller
          * jamais confiance à ce connard d'utilisateur ! :D
          */
 
-        $article = $this->model->find($article_id);
+        $article = $this->model->findArticleWithEntreprise($article_id);
+        $media = $this->model->findMedia($article_id);
+        $entreprises = new \Models\Entreprise();
+        $entreprises = $entreprises->findAll();
 
         /**
          * 5. On affiche 
          */
         $pageTitle = $article['titre'];
 
-        \Renderer::render('articles/show', compact('pageTitle', 'article', 'article_id'));
+        \Renderer::render('articles/show', compact('pageTitle', 'article', 'article_id', 'media', 'entreprises'));
     }
     public function delete()
     {
@@ -76,6 +78,18 @@ class Articles extends Controller
         $id = $_GET['id'];
 
 
+        //recuperation des fichier de l'article
+        $media = $this->model->findMedia($id);
+
+             /**
+         * 5. suppression du fichier
+         */
+        foreach ($media as $row) {
+            unlink($row['lien']);
+        }
+        // delete des media (sql)
+        $this->model->deleteMedia($id);
+
         /**
          * 3. Vérification que l'article existe bel et bien
          */
@@ -90,14 +104,9 @@ class Articles extends Controller
         $this->model->delete($id);
 
 
-        /**
-         * 5. suppression du fichier
-         */
-        if (!empty($_GET['file'])) {
 
-            $file = htmlspecialchars($_GET['file']);
-            unlink($file);
-        }
+
+   
 
         /**
          * 6. Redirection vers la page d'accueil
@@ -117,7 +126,7 @@ class Articles extends Controller
         // On commence par l'author
         $titre = null;
         if (!empty($_POST['titre'])) {
-            $titre = $_POST['titre'];
+            $titre = htmlspecialchars($_POST['titre']);
         }
 
         // Ensuite le contenu
@@ -166,11 +175,42 @@ class Articles extends Controller
         }
         // ==========================================
 
-
-
-
-        // 4. Redirection vers l'article en question :
+        // 4. Redirection
 
         \Http::redirect("index.php?controller=user&task=showAdmin");
+    }
+    public function deleteImage()
+    {
+        if (empty($_GET['id']) || !ctype_digit($_GET['id'])) {
+            echo ("erreur id");
+        }
+
+        $id = $_GET['id'];
+        $articleId = $_GET['articleId'];
+        $image = $this->model->find($id, 'Media');
+             /**
+         * 5. suppression du fichier
+         */
+  
+            unlink($image['lien']);
+    
+
+        
+
+        /**
+         * 4. Réelle suppression de l'article
+         */
+        $this->model->delete($id, 'Media');
+
+
+
+
+   
+
+        /**
+         * 6. Redirection vers la page d'accueil
+         */
+
+         \Http::redirect("index.php?controller=articles&task=show&id=".$articleId);
     }
 }

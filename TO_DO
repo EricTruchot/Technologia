@@ -1,13 +1,32 @@
-UPLOAD multiple
+show article
+    ajout image
+    modif texte
 
-ajout entreprise (html / sql)
-detail article
-
-lock page admin et bouton (delete / modif)
-
+categorie image video 
 
 
 
+lock page admin et bouton (delete / modif) sur le controlleur
+
+JS
+
+responsive
+
+
+
+
+
+    
+    public function find(int $id, string $table = null)
+    {
+        if($table == null){
+            $table = $this->table;
+        }
+        $query = $this->pdo->prepare("SELECT * FROM {$table} WHERE id = :id");
+        $query->execute(['id' => $id]);
+        $item = $query->fetch(); //fetchAll? FETCH_ASSOC?
+        return $item;
+    }
 
 
 

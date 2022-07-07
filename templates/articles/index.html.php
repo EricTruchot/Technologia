@@ -3,8 +3,12 @@
 <?php foreach ($articles as $article) : ?>
     <h2><?= $article['titre'] ?></h2>
     <small>Ecrit le <?= $article['date'] ?></small>
+    <p>Entreprise: <?= $article['nom'] ?></p>
     <p><?= $article['description'] ?></p>
-    <img src="<?= $article['contenu'] ?>" alt="<?= $article['titre'] ?>">
-    <a href="index.php?controller=articles&task=show&id=<?= $article['id'] ?>">Lire la suite</a>
-    <a href="index.php?controller=articles&task=delete&id=<?= $article['id'] ?>&file=<?= $article['contenu'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?`)">Supprimer</a>
+    <?php foreach ($media as $img) : 
+        if ($img['Article_id'] == $article['id']){
+        ?>
+<img src="<?= $img['lien'] ?>" alt="<?= $article['titre'] ?>">
+<?php } endforeach ?>
+    <a href="index.php?controller=articles&task=show&id=<?= $article['id'] ?>">En savoir plus</a>
 <?php endforeach ?>

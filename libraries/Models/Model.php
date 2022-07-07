@@ -9,26 +9,33 @@ abstract class Model
     {
         $this->pdo = \Database::getPdo();
     }
-    public function findAll(?string $order = ""): array
+    public function findAll(string $table = null)
     {
-        $sql = "SELECT * FROM {$this->table}";
-        if ($order){
-            $sql .= " ORDER BY " . $order;
+        if($table == null){
+            $table = $this->table;
         }
+        $sql = "SELECT * FROM {$table} ORDER BY id DESC";
+
         $resultats = $this->pdo->query($sql);
         $articles = $resultats->fetchAll();
         return $articles;
     }
-    public function find(int $id)
+    public function find(int $id, string $table = null)
     {
-        $query = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = :id");
+        if($table == null){
+            $table = $this->table;
+        }
+        $query = $this->pdo->prepare("SELECT * FROM {$table} WHERE id = :id");
         $query->execute(['id' => $id]);
         $item = $query->fetch(); //fetchAll? FETCH_ASSOC?
         return $item;
     }
-    public function delete(int $id): void
+    public function delete(int $id, string $table = null): void
     {
-        $query = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = :id");
+        if($table == null){
+            $table = $this->table;
+        }
+        $query = $this->pdo->prepare("DELETE FROM {$table} WHERE id = :id");
         $query->execute(['id' => $id]);
     }
     

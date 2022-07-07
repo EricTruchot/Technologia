@@ -16,7 +16,7 @@ class User extends Controller
     public function showAddArticle()
     {
         $pageTitle = 'Ajouter un article';
-        $entreprises = new \Models\Entreprise(); 
+        $entreprises = new \Models\Entreprise();
         $entreprises = $entreprises->findAll();
         \Renderer::render('articles/addArticle', compact('pageTitle', 'entreprises'));
     }
@@ -41,7 +41,7 @@ class User extends Controller
                 $verifPwd = password_verify($mdp, $getLog[0]['mdp']);
 
                 if ($verifPwd == true) {
-                
+
                     $_SESSION['email'] = $getLog[0]['email'];
                     $_SESSION['type'] = $getLog[0]['type'];
 
@@ -58,20 +58,28 @@ class User extends Controller
         }
     }
 
-    public function logout(){
+    public function logout()
+    {
 
         $this->model->logout();
         \Http::redirect("index.php");
     }
     public function showAdmin()
-        {
-            $pageTitle = "Admin";
-            $article = new \Models\Articles(); 
-            $articles = $article->findAll("date DESC");
-            
-            \Renderer::render('articles/admin', compact('pageTitle', 'articles'));
-        }
-    
+    {
+        $pageTitle = "Admin";
+        $article = new \Models\Articles();
+        $articles = $article->findAll();
+
+        \Renderer::render('articles/admin', compact('pageTitle', 'articles'));
+    }
+
+    // public function showUpdateArticle()
+    // {
+    //     $pageTitle = 'Modifier un article';
+
+    //     \Renderer::render('articles/connexion', compact('pageTitle'));
+    // }
+
     public function delete()
     {
         // supprimer un article
