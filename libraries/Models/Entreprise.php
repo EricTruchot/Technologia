@@ -12,4 +12,5 @@ class Entreprise extends Model
      $query->execute(compact('nom'));
  }
 
+
 }

@@ -81,7 +81,7 @@ class Articles extends Controller
         //recuperation des fichier de l'article
         $media = $this->model->findMedia($id);
 
-             /**
+        /**
          * 5. suppression du fichier
          */
         foreach ($media as $row) {
@@ -106,7 +106,7 @@ class Articles extends Controller
 
 
 
-   
+
 
         /**
          * 6. Redirection vers la page d'accueil
@@ -188,14 +188,14 @@ class Articles extends Controller
         $id = $_GET['id'];
         $articleId = $_GET['articleId'];
         $image = $this->model->find($id, 'Media');
-             /**
+        /**
          * 5. suppression du fichier
          */
-  
-            unlink($image['lien']);
-    
 
-        
+        unlink($image['lien']);
+
+
+
 
         /**
          * 4. Réelle suppression de l'article
@@ -205,12 +205,81 @@ class Articles extends Controller
 
 
 
-   
+
 
         /**
          * 6. Redirection vers la page d'accueil
          */
 
-         \Http::redirect("index.php?controller=articles&task=show&id=".$articleId);
+        \Http::redirect("index.php?controller=articles&task=show&id=" . $articleId);
+    }
+    public function updateArticle()
+    {
+        $articleId = null;
+        if (!empty($_POST['articleId'])) {
+            $articleId = htmlspecialchars($_POST['articleId']);
+        }
+        $titre = null;
+        if (!empty($_POST['modifTitre'])) {
+            $titre = htmlspecialchars($_POST['modifTitre']);
+        }
+
+        // Ensuite le contenu
+        $description = null;
+        if (!empty($_POST['modifDescription'])) {
+            // On fait quand même gaffe à ce que le gars n'essaye pas des balises cheloues dans son commentaire
+            $description = htmlspecialchars($_POST['modifDescription']);
+        }
+
+        $idEntreprise = null;
+        if (!empty($_POST['modifEntreprise'])) {
+            $idEntreprise = htmlspecialchars($_POST['modifEntreprise']);
+        }
+
+
+        // Vérification finale des infos envoyées dans le formulaire (donc dans le POST)
+        // Si il n'y a pas d'auteur OU qu'il n'y a pas de contenu OU qu'il n'y a pas d'identifiant d'article
+        if (!$articleId || !$titre || !$description || !$idEntreprise) {
+            die("Votre formulaire a été mal rempli !");
+        }
+
+        // 3. Insertion de l'article
+        $this->model->update($articleId, $titre, $description, $idEntreprise);
+
+        //redirection
+        \Http::redirect("index.php?controller=articles&task=show&id=" . $articleId);
+    }
+
+    public function addMediaToArticle()
+    {
+        $upload = new FileServices;
+        // =============== upload file ============
+
+        $articleId = null;
+        if (!empty($_POST['articleId'])) {
+            $articleId = htmlspecialchars($_POST['articleId']);
+        }
+
+        if (isset($_FILES['fileToUpload'])) {
+            $myFile = $_FILES['fileToUpload'];
+            $fileCount = count($myFile["name"]);
+            $file_ary = array();
+            $file_keys = array_keys($myFile);
+
+            for ($i = 0; $i < $fileCount; $i++) {
+
+                foreach ($file_keys as $key) {
+                    $file_ary[$i][$key] = $myFile[$key][$i];
+                }
+            }
+            foreach ($file_ary as $key => $value) {
+
+                $file = $upload->upload($value);
+
+                $this->model->insertMedia($file, $articleId);
+            }
+        }
+        // ==========================================
+        \Http::redirect("index.php?controller=articles&task=show&id=" . $articleId);
     }
 }

@@ -39,6 +39,12 @@ class Articles extends Model
 
         return $id;
     }
+    public function update(int $id, string $titre, string $description, int $Entreprise_id)
+    {
+        $query = $this->pdo->prepare('UPDATE Article SET titre = :titre, description = :description, Entreprise_id = :Entreprise_id
+                                      WHERE id = :id');
+        $query->execute(compact('id', 'titre', 'description', 'Entreprise_id'));
+    }
 
     public function insertMedia(string $lien, int $Article_id)
     {

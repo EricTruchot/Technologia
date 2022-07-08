@@ -18,5 +18,9 @@ public function insert()
     \Http::redirect("index.php?controller=user&task=showAddArticle");
 
     }
+    public function updateEntreprise()
+    {
+        
+    }
 
 }
