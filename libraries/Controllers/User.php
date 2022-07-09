@@ -7,18 +7,24 @@ class User extends Controller
     protected $modelName = \Models\User::class;
 
 
-    public function showConnexion()
+    public function showConnexion() //Affichage de la page de connexion
     {
         $pageTitle = 'connexion';
 
         \Renderer::render('articles/connexion', compact('pageTitle'));
     }
-    public function showAddArticle()
+    public function showAddArticle() //Page ajout d'article
     {
-        $pageTitle = 'Ajouter un article';
-        $entreprises = new \Models\Entreprise();
-        $entreprises = $entreprises->findAll();
-        \Renderer::render('articles/addArticle', compact('pageTitle', 'entreprises'));
+        if (($_SESSION['type'] == 'admin')) { //Verification du type d'utilisateur pour voir la page
+
+            $pageTitle = 'Ajouter un article';
+            $entreprises = new \Models\Entreprise();
+            $entreprises = $entreprises->findAll();
+            \Renderer::render('articles/addArticle', compact('pageTitle', 'entreprises'));
+        } else {
+            $_SESSION["message"] = "Vous devez etre administrateur pour voir cette page.";
+            \Http::redirect("index.php");
+        }
     }
 
     public function login()
@@ -26,41 +32,39 @@ class User extends Controller
         $login = new \Models\User();
 
 
-        if (
-            filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL)
-            && htmlspecialchars(filter_input(INPUT_POST, "mdp")) // ????????
-        ) {
 
-            $email = $_POST['email'];
-            $mdp = $_POST['mdp'];
 
-            $getLog = $this->model->getlogin($email, $mdp);
+        $email = null;
+        if (!empty($_POST['email'])) {
+            $email = htmlspecialchars($_POST['email']);
+        }
+        $mdp = null;
+        if (!empty($_POST['mdp'])) {
+            $mdp = htmlspecialchars($_POST['mdp']);
+        }
 
-            if (isset($email) && isset($mdp)) {
+        if (!$email || !$mdp) {
+            $_SESSION["message"] = "Identifiants invalide";
+            \Http::redirect("index.php?controller=user&task=showConnexion");
+        }
 
-                $verifPwd = password_verify($mdp, $getLog[0]['mdp']);
+        $getLog = $this->model->getlogin($email, $mdp); //Recupere l'utilisateur pour la verification de connexion
 
-                if ($verifPwd == true) {
+        $verifPwd = password_verify($mdp, $getLog[0]['mdp']); //verification de la signature du mdp
 
-                    $_SESSION['email'] = $getLog[0]['email'];
-                    $_SESSION['type'] = $getLog[0]['type'];
+        if ($verifPwd == true) { //verification des login
+            $_SESSION['email'] = $getLog[0]['email'];
+            $_SESSION['type'] = $getLog[0]['type'];
 
-                    //  $this->showAdmin();
-                    \Http::redirect("index.php?controller=user&task=showAdmin"); // 
-                } else {
-
-                    echo json_encode('Email ou mot de passe incorrect');
-                }
-            }
+            \Http::redirect("index.php?controller=user&task=showAdmin"); // 
         } else {
-
-            echo json_encode('Entrer des identifiants valide');
+            $_SESSION["message"] = "Email ou mot de passe incorrect";
+            \Http::redirect("index.php?controller=user&task=showConnexion");
         }
     }
 
-    public function logout()
+    public function logout() //Deconnexion
     {
-
         $this->model->logout();
         \Http::redirect("index.php");
     }
@@ -73,44 +77,37 @@ class User extends Controller
         \Renderer::render('articles/admin', compact('pageTitle', 'articles'));
     }
 
-    // public function showUpdateArticle()
+    // public function delete()
     // {
-    //     $pageTitle = 'Modifier un article';
+    //     // supprimer un article
 
-    //     \Renderer::render('articles/connexion', compact('pageTitle'));
+    //     /**
+    //      * 1. On vérifie que le GET possède bien un paramètre "id" (delete.php?id=202) et que c'est bien un nombre
+    //      */
+    //     if (empty($_GET['id']) || !ctype_digit($_GET['id'])) {
+    //         die("Ho ?! Tu n'as pas précisé l'id de l'article !");
+    //     }
+
+    //     $id = $_GET['id'];
+
+
+    //     /**
+    //      * 3. Vérification que l'article existe bel et bien
+    //      */
+    //     $article = $this->model->find($id);
+    //     if (!$article) {
+    //         die("L'article $id n'existe pas, vous ne pouvez donc pas le supprimer !");
+    //     }
+
+    //     /**
+    //      * 4. Réelle suppression de l'article
+    //      */
+    //     $this->model->delete($id);
+
+    //     /**
+    //      * 5. Redirection vers la page d'accueil
+    //      */
+
+    //     \Http::redirect("index.php");
     // }
-
-    public function delete()
-    {
-        // supprimer un article
-
-        /**
-         * 1. On vérifie que le GET possède bien un paramètre "id" (delete.php?id=202) et que c'est bien un nombre
-         */
-        if (empty($_GET['id']) || !ctype_digit($_GET['id'])) {
-            die("Ho ?! Tu n'as pas précisé l'id de l'article !");
-        }
-
-        $id = $_GET['id'];
-
-
-        /**
-         * 3. Vérification que l'article existe bel et bien
-         */
-        $article = $this->model->find($id);
-        if (!$article) {
-            die("L'article $id n'existe pas, vous ne pouvez donc pas le supprimer !");
-        }
-
-        /**
-         * 4. Réelle suppression de l'article
-         */
-        $this->model->delete($id);
-
-        /**
-         * 5. Redirection vers la page d'accueil
-         */
-
-        \Http::redirect("index.php");
-    }
 }

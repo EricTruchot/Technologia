@@ -1,6 +1,11 @@
-securité (input filter)
 
+clean code, commentaire
+securité (input filter)
 lock page admin et bouton (delete / modif) sur le controlleur
+
+gestion erreur 
+
+
 
 
 categorie image video 
@@ -10,8 +15,10 @@ JS
 responsive
 
 
-
-
+QUESTION:
+//FETCH_ASSOC? (findMedia (model article))
+Redirection lors des erreur (controlleur)
+connexion a la ddb: info de connexion non securité (mdp?)
 
     
     public function find(int $id, string $table = null)

@@ -8,7 +8,4 @@ if (!isset($_SESSION)) {
 require_once('libraries/autoload.php');
 
 
-\Application::process(); //
-
-// $controller = new \Controllers\Articles();
-// $controller->index();
+\Application::process(); 

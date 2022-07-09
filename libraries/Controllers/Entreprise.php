@@ -6,7 +6,7 @@ class Entreprise extends Controller
 {
     protected $modelName = \Models\Entreprise::class;
 
-public function insert()
+public function insert() //Ajout d'une nouvelle entreprise
 {
     $nom = null;
     if (!empty($_POST['nom'])) {
@@ -17,10 +17,6 @@ public function insert()
 
     \Http::redirect("index.php?controller=user&task=showAddArticle");
 
-    }
-    public function updateEntreprise()
-    {
-        
     }
 
 }

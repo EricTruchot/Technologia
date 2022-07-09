@@ -1,6 +1,6 @@
 <?php
 
-class Application //appel un controller et une function
+class Application //appel un controller et une fonction
 {
     public static function process()
     {
@@ -15,8 +15,8 @@ class Application //appel un controller et une function
             $task = $_GET['task'];
         }
         //exemple:
-        //si: index.php?controller=article&tarsk=show
-        //alors on chercher le fichier Article, la function show
+        //index.php?controller=article&tarsk=show
+        //on chercher le fichier Article, la function show
 
 
         //puis on concat le tout pour indiquer que l'on recherche dans le dossier Controllers

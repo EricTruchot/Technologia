@@ -6,7 +6,7 @@ class User extends Model
 {
     protected $table = "Utilisateur";
 
-    public function getLogin(string $email, string $mdp): array
+    public function getLogin(string $email, string $mdp): array //Recupere l'utilisateur pour la verification de connexion
     {
         $query = $this->pdo->prepare("SELECT email, mdp, type FROM Utilisateur WHERE email = :email");
         $query->execute(["email"=>$email]);
@@ -15,7 +15,7 @@ class User extends Model
         return $login;
     }
 
-    public function logout()
+    public function logout() //Fonction de deconnexion
 {
     session_start();
     session_unset();
