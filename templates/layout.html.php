@@ -5,34 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/style/style.css">
     <title>Technologia - <?= $pageTitle ?></title>
+
 </head>
 
 <body>
     <header>
         <nav>
-            <ul>
-                <li><a href="index.php">Acceuil</a></li>
 
-                <?php
+            <a href="index.php">Acceuil</a>
 
-                if (!empty($_SESSION['type'])) { ?>
+            <?php
 
-                    <li><a href='index.php?controller=user&task=logout'>Déconnexion</a></li>
+            if (!empty($_SESSION['type'])) { ?>
 
-                    <?php if ($_SESSION['type'] == 'admin') { ?>
+                <a href='index.php?controller=user&task=logout'>Déconnexion</a>
 
-                        <li><a href='index.php?controller=user&task=showAdmin'>Administration</a></li>
+                <?php if ($_SESSION['type'] == 'admin') { ?>
 
-                    <?php }
-                } elseif (!isset($_SESSION['type'])) { ?>
-                    <li><a href='index.php?controller=user&task=showConnexion'>Connexion</a></li>
-                <?php } ?>
-            </ul>
+                    <a href='index.php?controller=user&task=showAddArticle'>Ajouter un article</a>
+
+                <?php }
+            } elseif (!isset($_SESSION['type'])) { ?>
+                <a href='index.php?controller=user&task=showConnexion'>Connexion</a>
+            <?php } ?>
+
         </nav>
-    </header>
+        <?php if (isset($_SESSION['message'])) { //message "systeme" 
+        ?>
+            <p><?= $_SESSION['message'] ?></p>
 
-    <?= $pageContent ?>
+        <?php unset($_SESSION['message']);
+        } ?>
+    </header>
+    <main>
+        <?= $pageContent ?>
+    </main>
 </body>
 
 </html>

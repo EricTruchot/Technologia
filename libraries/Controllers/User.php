@@ -56,7 +56,7 @@ class User extends Controller
             $_SESSION['email'] = $getLog[0]['email'];
             $_SESSION['type'] = $getLog[0]['type'];
 
-            \Http::redirect("index.php?controller=user&task=showAdmin"); // 
+            \Http::redirect("index.php"); // 
         } else {
             $_SESSION["message"] = "Email ou mot de passe incorrect";
             \Http::redirect("index.php?controller=user&task=showConnexion");

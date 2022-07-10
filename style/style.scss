@@ -1,0 +1,45 @@
+$color1: #161610;
+$color2: #424242;
+$color3: #0c95f0;
+$color4: #f3f3f3;
+$color5: #292827;
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+body {
+  background-color: $color5;
+  header {
+    nav {
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+width: 100%;
+
+      background-color: $color1;
+      display: flex;
+      justify-content: space-around;
+      border-bottom: 1px solid $color2;
+
+      a {
+        text-decoration: none;
+        color: $color3;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+      }
+      a:hover {
+        color: $color4;
+        background-color: $color2;
+      }
+    }
+  }
+  main {
+    margin-top: 39px;
+    // background-image: linear-gradient(to bottom right, $color1, $color3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+}

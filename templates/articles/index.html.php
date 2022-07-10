@@ -11,4 +11,7 @@
 <img src="<?= $img['lien'] ?>" alt="<?= $article['titre'] ?>">
 <?php } endforeach ?>
     <a href="index.php?controller=articles&task=show&id=<?= $article['id'] ?>">En savoir plus</a>
+    <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 'admin') { ?>
+    <a href="index.php?controller=articles&task=delete&id=<?= $article['id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
+    <?php } ?>
 <?php endforeach ?>

@@ -6,7 +6,7 @@ class User extends Model
 {
     protected $table = "Utilisateur";
 
-    public function getLogin(string $email, string $mdp): array //Recupere l'utilisateur pour la verification de connexion
+    public function getLogin(string $email): array //Recupere l'utilisateur pour la verification de connexion
     {
         $query = $this->pdo->prepare("SELECT email, mdp, type FROM Utilisateur WHERE email = :email");
         $query->execute(["email"=>$email]);
