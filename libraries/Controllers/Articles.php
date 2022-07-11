@@ -68,7 +68,7 @@ class Articles extends Controller
 
         //Redirection vers la page d'accueil
 
-        \Http::redirect("index.php?controller=user&task=showAdmin");
+        \Http::redirect("index.php");
     }
     public function insert() //Ajout d'un article
     {

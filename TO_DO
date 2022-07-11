@@ -3,6 +3,16 @@ Arthur C. Clarke
 
 
 
+
+<?php
+                                if ($media[$i] == $media[0]) { ?> class="active" <?php    }
+                        ?> 
+                                                                                    
+
+
+
+                                                                                    
+
 JS
 
 responsive

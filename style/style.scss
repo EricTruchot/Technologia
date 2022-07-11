@@ -3,25 +3,45 @@ $color2: #424242;
 $color3: #0c95f0;
 $color4: #f3f3f3;
 $color5: #292827;
+$color6: #c20000;
 
 * {
   padding: 0px;
   margin: 0px;
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+}
+@mixin btn-bleu {
+  text-decoration: none;
+  color: $color4;
+  background-color: $color3;
+  border-radius: 6px;
+  border: 2px solid $color3;
+  padding: 7px;
+}
+@mixin btn-bleu-hover {
+  background-color: $color1;
+  border: 2px solid $color3;
+}
+@mixin input {
+  background-color: $color2;
+  color: $color4;
+  padding: 3px;
+  border-radius: 5px;
 }
 body {
   background-color: $color5;
+  color: $color4;
   header {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
     nav {
-        overflow: hidden;
-        position: fixed;
-        top: 0;
-width: 100%;
-
       background-color: $color1;
       display: flex;
       justify-content: space-around;
       border-bottom: 1px solid $color2;
-
       a {
         text-decoration: none;
         color: $color3;
@@ -34,12 +54,243 @@ width: 100%;
         background-color: $color2;
       }
     }
+    .message {
+      color: yellow;
+      text-align: center;
+      margin-top: 15px;
+      text-decoration: underline;
+      font-size: 24px;
+    }
   }
   main {
-    margin-top: 39px;
+    margin-top: 90px;
+    margin-bottom: 50px;
     // background-image: linear-gradient(to bottom right, $color1, $color3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    .top {
+      border-bottom: 2px solid $color3;
+      h1 {
+        color: $color3;
+        font-size: 45px;
+      }
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 100px;
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
+    .content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      .card {
+        border: 2px solid $color2;
+        padding: 2%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        img {
+          min-width: 100%;
+          max-width: 100%;
+          max-height: 100%;
+        }
+        span {
+          color: $color3;
+        }
+        .btn {
+          @include btn-bleu();
+        }
+        .btn:hover {
+          @include btn-bleu-hover();
+        }
+        .delete {
+          background-color: $color6;
+          border: 2px solid $color6;
+        }
+        .delete:hover {
+          background-color: $color1;
+          border: 2px solid $color6;
+        }
+      }
+    }
+    .show {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      h1 {
+        color: $color3;
+      }
+      .carousel {
+        // max-width: 80%;
+        .slider img {
+          max-width: 100%;
+          display: none;
+        }
+        img.active {
+          display: block;
+          animation: fade 0.8s;
+        }
+        @keyframes fade {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        .cont-btn {
+          width: 100%;
+          border: 1px solid $color2;
+          display: flex;
+          justify-content: center;
+          .btn-nav {
+            font-size: 50px;
+            margin: 0 15px;
+            cursor: pointer;
+          }
+        }
+      }
+      .info {
+        width: 100%;
+        padding: 5px;
+        border-bottom: 2px solid $color2;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .admin {
+        width: 100%;
+        padding-top: 20px;
+        border-top: 2px solid $color3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        h2{
+          font-size: 30px;
+        }
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          input, textarea, select {
+@include input()
+          }
+          label {
+            color: $color3;
+            font-size: 20px;
+          }
+          div {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .btn{
+            @include btn-bleu()
+          }
+          .btn:hover{
+            @include btn-bleu-hover()
+          }
+        }
+        .images{
+          display: flex;
+          gap: 20px;
+          width: 100%;
+          .image{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            max-width: 30%;
+            a{
+              @include btn-bleu();
+              background-color: $color6;
+              border: 2px solid $color6;
+              width: 80px;
+              text-align: center;
+            }
+            .a:hover {
+              @include btn-bleu-hover();
+              background-color: $color1;
+              border: 2px solid $color6;
+            }
+
+          }
+        }
+      }
+    }
+    .login{
+      h1 {
+        color: $color3;
+        font-size: 45px;
+        text-align: center;
+      }
+      form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        label{
+          color: $color3;
+          font-size: 20px;
+        }
+        input, textarea, select {
+          @include input()
+                    }
+                    button{
+                      @include btn-bleu()
+                    }
+                    button:hover{
+                      @include btn-bleu-hover()
+                    }
+      }
+    }
+    .addArticle{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      width: 80%;
+      h1 {
+        color: $color3;
+        font-size: 36px;
+        text-align: center;
+      }
+      form {
+        border: 2px solid $color2;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        p{
+          font-size: 24px;
+        }
+        input, textarea, select {
+          @include input()
+                    }
+                    .btn{
+                      @include btn-bleu()
+                    }
+                    .btn:hover{
+                      @include btn-bleu-hover()
+                    }
+                    label{
+                      color: $color3;
+                      font-size: 20px;
+                    }
+      }
+    }
+  }
 }

@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/style/normalize.css">
     <link rel="stylesheet" href="/style/style.css">
+
     <title>Technologia - <?= $pageTitle ?></title>
 
 </head>
-
 <body>
     <header>
         <nav>
@@ -31,17 +32,18 @@
                 <a href='index.php?controller=user&task=showConnexion'>Connexion</a>
             <?php } ?>
 
-        </nav>
+            </nav>
         <?php if (isset($_SESSION['message'])) { //message "systeme" 
         ?>
-            <p><?= $_SESSION['message'] ?></p>
+            <p class="message"><?= $_SESSION['message'] ?></p>
 
         <?php unset($_SESSION['message']);
         } ?>
+        
     </header>
     <main>
         <?= $pageContent ?>
     </main>
 </body>
-
+<script src="/style/app.js"></script>
 </html>

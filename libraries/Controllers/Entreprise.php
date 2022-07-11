@@ -14,7 +14,7 @@ public function insert() //Ajout d'une nouvelle entreprise
     }
 
     $this->model->insertEntreprise($nom);
-
+    $_SESSION["message"] = "Entreprise ajouté";
     \Http::redirect("index.php?controller=user&task=showAddArticle");
 
     }
