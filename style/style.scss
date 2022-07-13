@@ -43,8 +43,10 @@ body {
   font-family: "Futura-Light";
   background-color: $color5;
   color: $color4;
-  header {
 
+  // BARRE DE NAVIGATION ====================================================
+
+  header {
     font-size: 16px;
     font-weight: bold;
     nav {
@@ -80,6 +82,8 @@ body {
       font-size: 24px;
     }
   }
+  // PAGE D'ACCUEIL ====================================================
+
   main {
     margin-top: 90px;
     margin-bottom: 50px;
@@ -100,36 +104,34 @@ body {
       @media only screen and (min-width: 600px) {
         padding-top: 50px;
         padding-bottom: 50px;
-          }
+      }
       @media only screen and (min-width: 992px) {
         padding-top: 100px;
         padding-bottom: 100px;
-          }
+      }
       h1 {
         color: $color3;
         font-size: 45px;
         font-family: "Luxia";
       }
-      p{
+      p {
         display: none;
         @media only screen and (min-width: 600px) {
           display: flex;
-
-            }
+        }
       }
 
-      .bandeau{
+      .bandeau {
         display: none;
-         @media only screen and (min-width: 992px ) {
-       display: flex;
-       gap: 15px;
-       width: 100%;
-         }
-         img{
-   
-           overflow: hidden;
-         }
-       }
+        @media only screen and (min-width: 992px) {
+          display: flex;
+          gap: 15px;
+          width: 100%;
+        }
+        img {
+          overflow: hidden;
+        }
+      }
     }
 
     .content {
@@ -166,9 +168,9 @@ body {
           font-size: 26px;
           @media only screen and (min-width: 600px) {
             font-size: 20px;
-                      }
+          }
           @media only screen and (min-width: 992px) {
-font-size: 18px;
+            font-size: 18px;
           }
         }
         span {
@@ -201,6 +203,9 @@ font-size: 18px;
         }
       }
     }
+
+    // DETAIL D'ARTICLE ====================================================
+
     .show {
       width: 80%;
       display: flex;
@@ -213,11 +218,10 @@ font-size: 18px;
       }
       .carousel {
         width: 60%;
-        .slider{
+        .slider {
           display: flex;
           justify-content: center;
           height: 400px;
-          
         }
         .slider img {
           max-width: 100%;
@@ -226,12 +230,10 @@ font-size: 18px;
         img.active {
           display: flex;
           animation: fade 0.8s;
-       
+
           width: 100%;
           height: 100%;
           object-fit: cover;
-        
-          
         }
         @keyframes fade {
           from {
@@ -260,7 +262,7 @@ font-size: 18px;
         display: flex;
         justify-content: space-between;
         gap: 10px;
-        span{
+        span {
           color: $color3;
           font-weight: bold;
         }
@@ -338,6 +340,9 @@ font-size: 18px;
         }
       }
     }
+
+    // PAGE DE CONNEXION ====================================================
+
     .login {
       h1 {
         color: $color3;
@@ -366,6 +371,9 @@ font-size: 18px;
         }
       }
     }
+
+    //PAGE AJOUT D'ARTICLE ====================================================
+
     .addArticle {
       display: flex;
       flex-direction: column;
