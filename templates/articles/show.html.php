@@ -14,11 +14,10 @@
         </div>
     </div>
     <div class="info">
-        <p>Entreprise: <?= $article['nom'] ?></p>
-        <small>Date du post: <?= $article['date'] ?></small>
+        <p>Entreprise: <span><?= $article['nom'] ?></span></p>
+        <small>Date du post: <span><?= $article['date'] ?></span></small>
     </div>
     <p><?= $article['description'] ?></p>
-
 
     <!-- MODIFICATION ADMIN -->
     <?php
@@ -26,6 +25,7 @@
     ?>
         <div class="admin">
             <h2>Modification de l'article:</h2>
+            <a class="btn delete" href="index.php?controller=articles&task=delete&id=<?= $article['id'] ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer l'article</a>
             <form action="index.php?controller=articles&task=updateArticle" method="POST">
                 <div>
                     <label>Selection de l'entreprise:</label>

@@ -1,6 +1,7 @@
 <?php
 
 namespace Controllers;
+use Services\FileServices;
 
 class Entreprise extends Controller
 {
@@ -8,9 +9,12 @@ class Entreprise extends Controller
 
 public function insert() //Ajout d'une nouvelle entreprise
 {
+    $service = new FileServices;
+    $service->admin();
+
     $nom = null;
     if (!empty($_POST['nom'])) {
-        $nom = htmlspecialchars($_POST['nom']);
+        $nom = htmlspecialchars(filter_input(INPUT_POST,'nom'));
     }
 
     $this->model->insertEntreprise($nom);

@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Services\FileServices;
+
 class User extends Controller
 {
     protected $modelName = \Models\User::class;
@@ -15,6 +17,9 @@ class User extends Controller
     }
     public function showAddArticle() //Page ajout d'article
     {
+        $service = new FileServices;
+        $service->admin();
+
         if (($_SESSION['type'] == 'admin')) { //Verification du type d'utilisateur pour voir la page
 
             $pageTitle = 'Ajouter un article';
@@ -31,16 +36,13 @@ class User extends Controller
     {
         $login = new \Models\User();
 
-
-
-
         $email = null;
         if (!empty($_POST['email'])) {
-            $email = htmlspecialchars($_POST['email']);
+            $email = htmlspecialchars(filter_input(INPUT_POST,'email'));
         }
         $mdp = null;
         if (!empty($_POST['mdp'])) {
-            $mdp = htmlspecialchars($_POST['mdp']);
+            $mdp = htmlspecialchars(filter_input(INPUT_POST,'mdp'));
         }
 
         if (!$email || !$mdp) {
@@ -68,46 +70,13 @@ class User extends Controller
         $this->model->logout();
         \Http::redirect("index.php");
     }
-    public function showAdmin()
-    {
-        $pageTitle = "Admin";
-        $article = new \Models\Articles();
-        $articles = $article->findAll();
-
-        \Renderer::render('articles/admin', compact('pageTitle', 'articles'));
-    }
-
-    // public function delete()
+    // public function showAdmin()
     // {
-    //     // supprimer un article
+    //     $pageTitle = "Admin";
+    //     $article = new \Models\Articles();
+    //     $articles = $article->findAll();
 
-    //     /**
-    //      * 1. On vérifie que le GET possède bien un paramètre "id" (delete.php?id=202) et que c'est bien un nombre
-    //      */
-    //     if (empty($_GET['id']) || !ctype_digit($_GET['id'])) {
-    //         die("Ho ?! Tu n'as pas précisé l'id de l'article !");
-    //     }
-
-    //     $id = $_GET['id'];
-
-
-    //     /**
-    //      * 3. Vérification que l'article existe bel et bien
-    //      */
-    //     $article = $this->model->find($id);
-    //     if (!$article) {
-    //         die("L'article $id n'existe pas, vous ne pouvez donc pas le supprimer !");
-    //     }
-
-    //     /**
-    //      * 4. Réelle suppression de l'article
-    //      */
-    //     $this->model->delete($id);
-
-    //     /**
-    //      * 5. Redirection vers la page d'accueil
-    //      */
-
-    //     \Http::redirect("index.php");
+    //     \Renderer::render('articles/admin', compact('pageTitle', 'articles'));
     // }
+
 }

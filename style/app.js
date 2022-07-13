@@ -1,4 +1,4 @@
-const items = document.querySelectorAll('img'); 
+const items = document.querySelectorAll('.slider img'); 
 const nbSlide = items.length; 
 const suivant = document.querySelector('.right');
 const precedent = document.querySelector('.left');
@@ -15,7 +15,6 @@ function slideSuivante(){
     }
 
     items[count].classList.add('active')
-    console.log(count);
     
 }
 suivant.addEventListener('click', slideSuivante)
@@ -32,7 +31,6 @@ function slidePrecedente(){
     }
 
     items[count].classList.add('active')
-    // console.log(count);
     
 }
 precedent.addEventListener('click', slidePrecedente)

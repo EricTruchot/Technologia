@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/style/normalize.css">
     <link rel="stylesheet" href="/style/style.css">
-
+    <link rel="stylesheet" href="/fonts/Futura-Light.otf">
+    <link rel="stylesheet" href="/fonts/Luxia-Regular.otf">
     <title>Technologia - <?= $pageTitle ?></title>
 
 </head>

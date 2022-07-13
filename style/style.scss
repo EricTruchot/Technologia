@@ -4,6 +4,16 @@ $color3: #0c95f0;
 $color4: #f3f3f3;
 $color5: #292827;
 $color6: #c20000;
+$color7: #c0c0c0;
+
+@font-face {
+  font-family: "Futura-Light";
+  src: url("../fonts/Futura-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: "Luxia";
+  src: url("../fonts/Luxia-Regular.otf") format("opentype");
+}
 
 * {
   padding: 0px;
@@ -30,34 +40,42 @@ $color6: #c20000;
   border-radius: 5px;
 }
 body {
+  font-family: "Futura-Light";
   background-color: $color5;
   color: $color4;
   header {
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    width: 100%;
+
+    font-size: 16px;
+    font-weight: bold;
     nav {
+      overflow: hidden;
+      position: fixed;
+      top: 0;
+      width: 100%;
+
       background-color: $color1;
       display: flex;
       justify-content: space-around;
       border-bottom: 1px solid $color2;
       a {
         text-decoration: none;
-        color: $color3;
+        color: $color4;
         width: 100%;
         text-align: center;
         padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       a:hover {
-        color: $color4;
+        color: $color3;
         background-color: $color2;
       }
     }
     .message {
       color: yellow;
       text-align: center;
-      margin-top: 15px;
+      margin-top: 49px;
       text-decoration: underline;
       font-size: 24px;
     }
@@ -70,26 +88,62 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 30px;
+
     .top {
       border-bottom: 2px solid $color3;
-      h1 {
-        color: $color3;
-        font-size: 45px;
-      }
       width: 80%;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 100px;
-      padding-top: 100px;
-      padding-bottom: 100px;
+      padding-bottom: 20px;
+      @media only screen and (min-width: 600px) {
+        padding-top: 50px;
+        padding-bottom: 50px;
+          }
+      @media only screen and (min-width: 992px) {
+        padding-top: 100px;
+        padding-bottom: 100px;
+          }
+      h1 {
+        color: $color3;
+        font-size: 45px;
+        font-family: "Luxia";
+      }
+      p{
+        display: none;
+        @media only screen and (min-width: 600px) {
+          display: flex;
+
+            }
+      }
+
+      .bandeau{
+        display: none;
+         @media only screen and (min-width: 992px ) {
+       display: flex;
+       gap: 15px;
+       width: 100%;
+         }
+         img{
+   
+           overflow: hidden;
+         }
+       }
     }
+
     .content {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 30px;
+      @media only screen and (min-width: 600px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 80%;
+      }
       .card {
         border: 2px solid $color2;
         padding: 2%;
@@ -97,11 +151,36 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: space-between;
         gap: 10px;
+        @media only screen and (min-width: 600px) {
+          width: 40%;
+          height: 320px;
+        }
+        @media only screen and (min-width: 992px) {
+          width: 25%;
+          height: 320px;
+        }
+        h2 {
+          font-family: "Luxia";
+          font-size: 26px;
+          @media only screen and (min-width: 600px) {
+            font-size: 20px;
+                      }
+          @media only screen and (min-width: 992px) {
+font-size: 18px;
+          }
+        }
+        span {
+          font-size: 24px;
+        }
         img {
           min-width: 100%;
           max-width: 100%;
           max-height: 100%;
+          overflow: hidden;
+          @media only screen and (min-width: 992px) {
+          }
         }
         span {
           color: $color3;
@@ -130,16 +209,29 @@ body {
       gap: 30px;
       h1 {
         color: $color3;
+        font-family: "Luxia";
       }
       .carousel {
-        // max-width: 80%;
+        width: 60%;
+        .slider{
+          display: flex;
+          justify-content: center;
+          height: 400px;
+          
+        }
         .slider img {
           max-width: 100%;
           display: none;
         }
         img.active {
-          display: block;
+          display: flex;
           animation: fade 0.8s;
+       
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        
+          
         }
         @keyframes fade {
           from {
@@ -156,7 +248,7 @@ body {
           justify-content: center;
           .btn-nav {
             font-size: 50px;
-            margin: 0 15px;
+            margin: 0 120px;
             cursor: pointer;
           }
         }
@@ -168,6 +260,10 @@ body {
         display: flex;
         justify-content: space-between;
         gap: 10px;
+        span{
+          color: $color3;
+          font-weight: bold;
+        }
       }
       .admin {
         width: 100%;
@@ -177,15 +273,29 @@ body {
         flex-direction: column;
         align-items: center;
         gap: 30px;
-        h2{
+        h2 {
           font-size: 30px;
+        }
+        a {
+          @include btn-bleu();
+          background-color: $color6;
+          border: 2px solid $color6;
+
+          text-align: center;
+        }
+        a:hover {
+          @include btn-bleu-hover();
+          background-color: $color1;
+          border: 2px solid $color6;
         }
         form {
           display: flex;
           flex-direction: column;
           gap: 10px;
-          input, textarea, select {
-@include input()
+          input,
+          textarea,
+          select {
+            @include input();
           }
           label {
             color: $color3;
@@ -196,23 +306,23 @@ body {
             flex-direction: column;
             gap: 10px;
           }
-          .btn{
-            @include btn-bleu()
+          .btn {
+            @include btn-bleu();
           }
-          .btn:hover{
-            @include btn-bleu-hover()
+          .btn:hover {
+            @include btn-bleu-hover();
           }
         }
-        .images{
+        .images {
           display: flex;
           gap: 20px;
           width: 100%;
-          .image{
+          .image {
             display: flex;
             flex-direction: column;
             gap: 5px;
             max-width: 30%;
-            a{
+            a {
               @include btn-bleu();
               background-color: $color6;
               border: 2px solid $color6;
@@ -224,38 +334,39 @@ body {
               background-color: $color1;
               border: 2px solid $color6;
             }
-
           }
         }
       }
     }
-    .login{
+    .login {
       h1 {
         color: $color3;
         font-size: 45px;
         text-align: center;
       }
-      form{
+      form {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 30px;
-        label{
+        label {
           color: $color3;
           font-size: 20px;
         }
-        input, textarea, select {
-          @include input()
-                    }
-                    button{
-                      @include btn-bleu()
-                    }
-                    button:hover{
-                      @include btn-bleu-hover()
-                    }
+        input,
+        textarea,
+        select {
+          @include input();
+        }
+        button {
+          @include btn-bleu();
+        }
+        button:hover {
+          @include btn-bleu-hover();
+        }
       }
     }
-    .addArticle{
+    .addArticle {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -274,22 +385,24 @@ body {
         align-items: center;
         gap: 10px;
         width: 100%;
-        p{
+        p {
           font-size: 24px;
         }
-        input, textarea, select {
-          @include input()
-                    }
-                    .btn{
-                      @include btn-bleu()
-                    }
-                    .btn:hover{
-                      @include btn-bleu-hover()
-                    }
-                    label{
-                      color: $color3;
-                      font-size: 20px;
-                    }
+        input,
+        textarea,
+        select {
+          @include input();
+        }
+        .btn {
+          @include btn-bleu();
+        }
+        .btn:hover {
+          @include btn-bleu-hover();
+        }
+        label {
+          color: $color3;
+          font-size: 20px;
+        }
       }
     }
   }

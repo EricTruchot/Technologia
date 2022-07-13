@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Futura-Light";
+  src: url("../fonts/Futura-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Luxia";
+  src: url("../fonts/Luxia-Regular.otf") format("opentype");
+}
+
 * {
   padding: 0px;
   margin: 0px;
@@ -8,18 +18,21 @@
 }
 
 body {
+  font-family: "Futura-Light";
   background-color: #292827;
   color: #f3f3f3;
 }
 
 body header {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+body header nav {
   overflow: hidden;
   position: fixed;
   top: 0;
   width: 100%;
-}
-
-body header nav {
   background-color: #161610;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -31,21 +44,30 @@ body header nav {
 
 body header nav a {
   text-decoration: none;
-  color: #0c95f0;
+  color: #f3f3f3;
   width: 100%;
   text-align: center;
   padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 body header nav a:hover {
-  color: #f3f3f3;
+  color: #0c95f0;
   background-color: #424242;
 }
 
 body header .message {
   color: yellow;
   text-align: center;
-  margin-top: 15px;
+  margin-top: 49px;
   text-decoration: underline;
   font-size: 24px;
 }
@@ -80,13 +102,57 @@ body main .top {
       -ms-flex-align: center;
           align-items: center;
   gap: 100px;
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding-bottom: 20px;
+}
+
+@media only screen and (min-width: 600px) {
+  body main .top {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  body main .top {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
 }
 
 body main .top h1 {
   color: #0c95f0;
   font-size: 45px;
+  font-family: "Luxia";
+}
+
+body main .top p {
+  display: none;
+}
+
+@media only screen and (min-width: 600px) {
+  body main .top p {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+body main .top .bandeau {
+  display: none;
+}
+
+@media only screen and (min-width: 992px) {
+  body main .top .bandeau {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 15px;
+    width: 100%;
+  }
+}
+
+body main .top .bandeau img {
+  overflow: hidden;
 }
 
 body main .content {
@@ -104,6 +170,20 @@ body main .content {
   gap: 30px;
 }
 
+@media only screen and (min-width: 600px) {
+  body main .content {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    width: 80%;
+  }
+}
+
 body main .content .card {
   border: 2px solid #424242;
   padding: 2%;
@@ -118,13 +198,52 @@ body main .content .card {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   gap: 10px;
+}
+
+@media only screen and (min-width: 600px) {
+  body main .content .card {
+    width: 40%;
+    height: 320px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  body main .content .card {
+    width: 25%;
+    height: 320px;
+  }
+}
+
+body main .content .card h2 {
+  font-family: "Luxia";
+  font-size: 26px;
+}
+
+@media only screen and (min-width: 600px) {
+  body main .content .card h2 {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  body main .content .card h2 {
+    font-size: 18px;
+  }
+}
+
+body main .content .card span {
+  font-size: 24px;
 }
 
 body main .content .card img {
   min-width: 100%;
   max-width: 100%;
   max-height: 100%;
+  overflow: hidden;
 }
 
 body main .content .card span {
@@ -172,6 +291,21 @@ body main .show {
 
 body main .show h1 {
   color: #0c95f0;
+  font-family: "Luxia";
+}
+
+body main .show .carousel {
+  width: 60%;
+}
+
+body main .show .carousel .slider {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 400px;
 }
 
 body main .show .carousel .slider img {
@@ -180,9 +314,15 @@ body main .show .carousel .slider img {
 }
 
 body main .show .carousel img.active {
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-animation: fade 0.8s;
           animation: fade 0.8s;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 @-webkit-keyframes fade {
@@ -216,7 +356,7 @@ body main .show .carousel .cont-btn {
 
 body main .show .carousel .cont-btn .btn-nav {
   font-size: 50px;
-  margin: 0 15px;
+  margin: 0 120px;
   cursor: pointer;
 }
 
@@ -231,6 +371,11 @@ body main .show .info {
       -ms-flex-pack: justify;
           justify-content: space-between;
   gap: 10px;
+}
+
+body main .show .info span {
+  color: #0c95f0;
+  font-weight: bold;
 }
 
 body main .show .admin {
@@ -254,6 +399,25 @@ body main .show .admin h2 {
   font-size: 30px;
 }
 
+body main .show .admin a {
+  text-decoration: none;
+  color: #f3f3f3;
+  background-color: #0c95f0;
+  border-radius: 6px;
+  border: 2px solid #0c95f0;
+  padding: 7px;
+  background-color: #c20000;
+  border: 2px solid #c20000;
+  text-align: center;
+}
+
+body main .show .admin a:hover {
+  background-color: #161610;
+  border: 2px solid #0c95f0;
+  background-color: #161610;
+  border: 2px solid #c20000;
+}
+
 body main .show .admin form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -265,7 +429,9 @@ body main .show .admin form {
   gap: 10px;
 }
 
-body main .show .admin form input, body main .show .admin form textarea, body main .show .admin form select {
+body main .show .admin form input,
+body main .show .admin form textarea,
+body main .show .admin form select {
   background-color: #424242;
   color: #f3f3f3;
   padding: 3px;
@@ -367,7 +533,9 @@ body main .login form label {
   font-size: 20px;
 }
 
-body main .login form input, body main .login form textarea, body main .login form select {
+body main .login form input,
+body main .login form textarea,
+body main .login form select {
   background-color: #424242;
   color: #f3f3f3;
   padding: 3px;
@@ -430,7 +598,9 @@ body main .addArticle form p {
   font-size: 24px;
 }
 
-body main .addArticle form input, body main .addArticle form textarea, body main .addArticle form select {
+body main .addArticle form input,
+body main .addArticle form textarea,
+body main .addArticle form select {
   background-color: #424242;
   color: #f3f3f3;
   padding: 3px;

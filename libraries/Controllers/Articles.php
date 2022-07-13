@@ -7,6 +7,7 @@ use Services\FileServices;
 class Articles extends Controller
 {
     protected $modelName = \Models\Articles::class;
+    
 
     public function index() //Page d'acceuil
     {
@@ -45,6 +46,9 @@ class Articles extends Controller
     }
     public function delete() //Supprimer un article
     {
+        $service = new FileServices;
+        $service->admin();
+
         //Récupération et verification de l'id
         if (empty($_GET['id']) || !ctype_digit($_GET['id'])) {
             $_SESSION["message"] = "ID incorrect";
@@ -72,22 +76,23 @@ class Articles extends Controller
     }
     public function insert() //Ajout d'un article
     {
-        $upload = new FileServices;
+        $service = new FileServices;
+        $service->admin();
 
         //Récuperation et verification des données du POST
         $titre = null;
         if (!empty($_POST['titre'])) {
-            $titre = htmlspecialchars($_POST['titre']);
+            $titre = htmlspecialchars(filter_input(INPUT_POST,'titre'));
         }
 
         $description = null;
         if (!empty($_POST['description'])) {
-            $description = htmlspecialchars($_POST['description']);
+            $description = htmlspecialchars(filter_input(INPUT_POST,'description'));
         }
 
         $idEntreprise = null;
         if (!empty($_POST['entreprise'])) {
-            $idEntreprise = htmlspecialchars($_POST['entreprise']);
+            $idEntreprise = htmlspecialchars(filter_input(INPUT_POST,'entreprise'));
         }
 
         // Vérification finale des infos envoyées dans le formulaire
@@ -116,7 +121,7 @@ class Articles extends Controller
             }
             //Ajout des fichiers dans le dossier et dans la BDD
             foreach ($file_ary as $key => $value) {
-                $file = $upload->upload($value);
+                $file = $service->upload($value);
                 $this->model->insertMedia($file, $lastId);
             }
         }
@@ -127,6 +132,9 @@ class Articles extends Controller
     }
     public function deleteImage()
     {
+        $service = new FileServices;
+        $service->admin();
+
         if (empty($_GET['id']) || !ctype_digit($_GET['id'])) {
             $_SESSION["message"] = "ID incorrect";
             \Http::redirect("index.php");
@@ -145,23 +153,26 @@ class Articles extends Controller
     }
     public function updateArticle()
     {
+        $service = new FileServices;
+        $service->admin();
+
         $articleId = null;
         if (!empty($_POST['articleId'])) {
-            $articleId = htmlspecialchars($_POST['articleId']);
+            $articleId = htmlspecialchars(filter_input(INPUT_POST,'articleId'));
         }
         $titre = null;
         if (!empty($_POST['modifTitre'])) {
-            $titre = htmlspecialchars($_POST['modifTitre']);
+            $titre = htmlspecialchars(filter_input(INPUT_POST,'modifTitre'));
         }
 
         $description = null;
         if (!empty($_POST['modifDescription'])) {
-            $description = htmlspecialchars($_POST['modifDescription']);
+            $description = htmlspecialchars(filter_input(INPUT_POST,'modifDescription'));
         }
 
         $idEntreprise = null;
         if (!empty($_POST['modifEntreprise'])) {
-            $idEntreprise = htmlspecialchars($_POST['modifEntreprise']);
+            $idEntreprise = htmlspecialchars(filter_input(INPUT_POST,'modifEntreprise'));
         }
 
         if (!$articleId || !$titre || !$description || !$idEntreprise) {
@@ -176,11 +187,12 @@ class Articles extends Controller
 
     public function addMediaToArticle() //Ajout d'une image a un article
     {
-        $upload = new FileServices;
+        $service = new FileServices;
+        $service->admin();
 
         $articleId = null;
         if (!empty($_POST['articleId'])) {
-            $articleId = htmlspecialchars($_POST['articleId']);
+            $articleId = htmlspecialchars(filter_input(INPUT_POST,'articleId'));
         }
 
         if (isset($_FILES['fileToUpload'])) {
@@ -197,7 +209,7 @@ class Articles extends Controller
             }
             foreach ($file_ary as $key => $value) {
 
-                $file = $upload->upload($value);
+                $file = $service->upload($value);
 
                 $this->model->insertMedia($file, $articleId);
             }

@@ -59,4 +59,12 @@ class FileServices
             }
         }
     }
+
+    public function admin()
+    {
+        if (($_SESSION['type'] != 'admin')) { //Verification du type d'utilisateur pour voir la page
+            $_SESSION["message"] = "Vous devez etre administrateur.";
+            \Http::redirect("index.php");
+        }
+    }
 }
